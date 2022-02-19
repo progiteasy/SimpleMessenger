@@ -1,0 +1,36 @@
+﻿@model RegistrationViewModel
+@{
+    ViewData["Title"] = "Registration";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-0 shadow rounded">
+                <div class="card-header bg-dark text-center text-white">
+                    <h3>Registration in the system</h3>
+                </div>
+                <div class="card-body justify-content-center">
+                    @using (Html.BeginForm("register", "account", FormMethod.Post, new { id = "registration-form" }))
+                    {
+                        <div id="form-validation-errors-area">
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" id="form-validation-errors-area">
+                                    @ViewData.ModelState.Values.SelectMany(value => value.Errors).First().ErrorMessage
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                        </div>
+                        @Html.TextBoxFor(registrationModel => registrationModel.UserName, new { @class = "form-control input-lg mb-2", placeholder = "Enter your username" })
+                        @Html.TextBoxFor(registrationModel => registrationModel.Email, new { @class = "form-control input-lg mb-2", placeholder = "Enter your e-mail address" })
+                        @Html.PasswordFor(registrationModel => registrationModel.Password, new { @class = "form-control input-lg mb-2", placeholder = "Enter your password" })
+                        @Html.PasswordFor(registrationModel => registrationModel.ConfirmedPassword, new { @class = "form-control input-lg mb-3", placeholder = "Confirm your password" })
+                        <div class="text-center">
+                            <input id="register-button" class="btn btn-lg btn-dark text-white" type="submit" value="Register">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

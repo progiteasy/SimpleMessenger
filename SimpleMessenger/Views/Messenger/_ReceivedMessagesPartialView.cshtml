@@ -1,0 +1,29 @@
+﻿@model MessengerViewModel
+<table class="table table-hover table-light shadow text-center" id="received-messages-table">
+    <thead class="table-dark">
+        <tr>
+            <th>Subject</th>
+            <th>Sender</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.ReceivedMessageModels.Count; i++)
+        {
+            <tr>
+                <td class="custom-td">
+                    @Html.DisplayFor(messengerModel => Model.ReceivedMessageModels[i].Subject)
+                    @Html.HiddenFor(messengerModel => Model.ReceivedMessageModels[i].Subject)
+                    @Html.HiddenFor(messengerModel_ => Model.ReceivedMessageModels[i].Body)
+                </td>
+                <td class="custom-td">
+                    @Html.DisplayFor(messengerModel => Model.ReceivedMessageModels[i].Sender)
+                    @Html.HiddenFor(messengerModel => Model.ReceivedMessageModels[i].Sender)
+                </td>
+                <td class="custom-td">
+                    @Html.DisplayFor(messengerModel => Model.ReceivedMessageModels[i].ReceivedDate)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

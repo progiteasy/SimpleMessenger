@@ -1,0 +1,69 @@
+﻿@model MessengerViewModel
+@{
+    ViewData["Title"] = "Messenger";
+}
+@section Styles
+{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trumbowyg@@2.25.1/dist/ui/trumbowyg.min.css"/>
+}
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.25.1/dist/trumbowyg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@6.0.2/dist/browser/signalr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/scripts/message-notifier.js"></script>
+}
+<div class="container mt-5 pb-5">
+    <div class="text-center text-white mb-4">
+        <h3>List of received messages</h3>
+    </div>
+    <div class="table-responsive" id="received-messages-table-wrapper">
+        @await Html.PartialAsync("_ReceivedMessagesPartialView")
+    </div>
+    <div class="modal fade" id="message-view-modal-window" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="selected-message-sender-area"></h5>
+                    <button class="btn-close" id="close-message-view-modal-window" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="selected-message-body-area">
+                </div>
+                <div class="modal-footer p-1">
+                    <input class="btn btn-lg btn-dark text-white" id="message-reply-button" type="submit" value="Reply">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="message-send-modal-window" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @using (Html.BeginForm("send", "message", FormMethod.Post, new { id = "message-send-form" }))
+                {
+                    <div class="modal-header">
+                        <h5 class="modal-title">New message</h5>
+                        <button class="btn-close" id="close-message-send-modal-window" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="form-validation-errors-area"></div>
+                        @Html.TextBoxFor(messengerModel => Model.MessageToSendModel.Recipients, new { @class = "form-control input-lg mb-2", id = "new-message-recipients-input", placeholder = "Recipients" })
+                        @Html.TextBoxFor(messengerModel => Model.MessageToSendModel.Subject, new { @class = "form-control input-lg mb-2", id = "new-message-subject-input", placeholder = "Subject" })
+                        @Html.TextAreaFor(messengerModel => Model.MessageToSendModel.Body, new { @class = "form-control input-lg", id = "new-message-body-input", placeholder = "Body" })
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center p-1">
+                        <input class="btn btn-lg btn-dark text-white" id="message-send-button" type="submit" value="Send">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="position-fixed bottom-0 end-0 p-3" id="received-message-notifications-area">
+        <div class="toast" role="alert">
+            <div class="toast-header">
+                <strong class="me-auto"></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+</div>

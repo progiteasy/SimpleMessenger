@@ -1,0 +1,38 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 70px;
+}
+
+p {
+    margin: 0;
+}
+
+.custom-header {
+    background-color: #23384c;
+}
+
+.custom-body {
+    background-color: #31475e;
+}
+
+.custom-footer {
+    position: absolute;
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    white-space: nowrap;
+    background-color: #23384c;
+}
+
+.custom-td {
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+#received-message-notifications-area {
+    z-index: 1;
+}
